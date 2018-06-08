@@ -29,9 +29,6 @@ interface ColorInterface
 interface TvGetters
 {
     public function getType();
-    {
-      return $this->markamodel;//dytctybt ghfdjr
-    }
     public function getResolution();
     public function getDiagonal();
 }
