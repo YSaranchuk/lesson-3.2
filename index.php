@@ -5,7 +5,7 @@ abstract class ParentForType
    public $price;
    public $title;
 
-   public function __construct()
+   public function __construct($title, $price)
    {
        $this->price=$price;
        $this->title=$title . '(print edition)';
