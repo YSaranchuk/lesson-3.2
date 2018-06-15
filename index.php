@@ -79,20 +79,21 @@ $BMVi8 -> setDiskont(0.1);
 
 class Tv extends Product implements DiskontInterface 
 {   
-    private $resolution;
+    private $resolution = "4K";
     public function getResolution()
     {
         return $this->resolution;
     }
-    private $diagonal;
+    private $diagonal = "10*10";
     public function getDiagonal()
     {
         return $this->diagonal;
     }
 }
 
-$tvSony=new Tv("Sony KD-65XE9305","HDR", 46);
-$tvLG=new Tv("LG 43UH610V","4K",49);
+$tvSony=new Tv("Sony KD-65XE9305", 46000);
+$tvLG=new Tv("LG 43UH610V", 49000);
+
 class BallpointPen extends Product implements InfoPen
 {
     public $marka;
