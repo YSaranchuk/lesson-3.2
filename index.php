@@ -14,7 +14,6 @@ interface DiskontInterface
     public function __construct($title, $price);
     public function setDiskont($diskont);
 }
-
 abstract class Product extends ParentForType implements DiskontInterface
 {
     protected $title;
@@ -27,12 +26,11 @@ abstract class Product extends ParentForType implements DiskontInterface
     protected $diskont;
     public function setDiskont($diskont) 
     {  
-        $result = $price - ($price * $diskont);
+        $result = $this->price - ($this->price * $diskont);
         $this->result = $result;
         print_r($result); // подскажите что я делаю не так , почему формула не выводит цену с дисконтом...
     }
 }
-
  
 interface ColorInterface
 {
@@ -76,7 +74,6 @@ $MINICooper = new Car ('MINICooper', 1500000);
 $BMVi8 -> setColor('red');
 $MINICooper -> setColor('black');
 $BMVi8 -> setDiskont(0.1);
-
 class Tv extends Product implements DiskontInterface 
 {   
     private $resolution = "4K";
@@ -90,10 +87,8 @@ class Tv extends Product implements DiskontInterface
         return $this->diagonal;
     }
 }
-
 $tvSony=new Tv("Sony KD-65XE9305", 46000);
 $tvLG=new Tv("LG 43UH610V", 49000);
-
 class BallpointPen extends Product implements InfoPen
 {
     public $marka;
@@ -124,7 +119,6 @@ $duckEn = new Duck('Scrooge McDuck ', 1000000);
 $duckRu = new Duck('Drake', 100);
 $duckEn -> getHabitat('Disney');
 $duckRu -> getHabitat('Altai');
-
 class Goods extends Product implements getGoods
 {
     public $name;
