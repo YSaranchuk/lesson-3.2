@@ -2,55 +2,64 @@
 header ("Content-Type: text/html; charset=utf-8");
 abstract class ParentForType
 {
-   public $price;
-   public $title;
-
-   public function __construct($title, $price)
-   {
-       $this->price=$price;
-       $this->title=$title . '(print edition)';
-   }
-   public function getPrice()
-   {
-       return $this->price;
-   }
-   public function getTitle()
-   {
-       return $this->title;
-   }
+    public function getPrint()
+    {
+        echo '<pre>';
+        print_r($this);
+        echo '</pre>';
+    }
+}
+interface DiskontInterface
+{
+    public function __construct($title, $price);
+    public function setDiskont($diskont);
 }
 
+abstract class Product extends ParentForType implements DiskontInterface
+{
+    protected $title;
+    protected $price;
+    public function __construct($title, $price)
+    {
+        $this->title = $title;
+        $this->price = $price;
+    }
+    protected $diskont;
+    public function setDiskont($diskont) 
+    {  
+        $result = $price - ($price * $diskont);
+        $this->result = $result;
+        print_r($result); // подскажите что я делаю не так , почему формула не выводит цену с дисконтом...
+    }
+}
+
+ 
 interface ColorInterface
 {
     public function setColor($color);
     public function getColor();
 }
-
 interface TvGetters
 {
-    public function getType();
     public function getResolution();
     public function getDiagonal();
 }
-
-interface InfoAboutPen
+interface InfoPen
 {
     public function aboutPen();
 }
-
-interface CreateDuck
+interface InfoDuck
 {
-    public function __construct($habitat);
+    public function __construct($title, $price);
+    public function getHabitat();
 }
-
 interface getGoods
 {
     public function getGoods();
 }
-
-
-class Car extends ParentForType implements ColorInterface
+class Car extends Product implements DiskontInterface
 {
+    protected $diskont = 0.1;
     private $color;
     public function setColor($color)
     {
@@ -62,31 +71,20 @@ class Car extends ParentForType implements ColorInterface
         return $this->color;
     }
 }
+$BMVi8 = new Car ('BMVI8', 2000000);
+$MINICooper = new Car ('MINICooper', 1500000);
+$BMVi8 -> setColor('red');
+$MINICooper -> setColor('black');
+$BMVi8 -> setDiskont(0.1);
 
-$BMVi8 = new Car('red');
-$MINICooper = new Car('grey');
-
-
-class Tv extends ParentForType implements TvGetters// хмм не понимаю почему здесь выдает ошибку
-{
-    private $markamodel;
+class Tv extends Product implements DiskontInterface 
+{   
     private $resolution;
-    private $diagonal;
-    public $price=19999;
-    public function __construct($markamodel, $resolution, $diagonal)
-    {
-        $this->markamodel = $markamodel;
-        $this->resolution = $resolution;
-        $this->diagonal = $diagonal;
-    }
-    public function getMarkamodel()
-    {
-        return $this->markamodel;
-    }
     public function getResolution()
     {
-        return $this->markamodel;
+        return $this->resolution;
     }
+    private $diagonal;
     public function getDiagonal()
     {
         return $this->diagonal;
@@ -95,8 +93,7 @@ class Tv extends ParentForType implements TvGetters// хмм не понимаю
 
 $tvSony=new Tv("Sony KD-65XE9305","HDR", 46);
 $tvLG=new Tv("LG 43UH610V","4K",49);
-
-class Pen extends ParentForType implements InfoPen
+class BallpointPen extends Product implements InfoPen
 {
     public $marka;
     public function aboutPen()
@@ -104,34 +101,30 @@ class Pen extends ParentForType implements InfoPen
         return $this->marka . ' - престижная шариковая ручка из коллекции' . $this->collection . ', цвет ручки' . $this->color;
     } 
 }
-$penParker = new BallpointPen();
-$penParker->marka = 'Parker';
-$penParker->collection = 'Jotter';
-$penParker->color = 'black';
-$penPero = new BallpointPen();
-$penPero->marka = 'Pero';
-$penPero->collection = 'Caran';
-$penPero->color = 'black';
-
-class Duck extends ParentForType implements InfoDuck
+$penParker = new BallpointPen('Parker', 'Jotter', 'black');
+$penPero = new BallpointPen('Pero', 'Caran', 'black');
+class Duck extends Product implements InfoDuck
 {
-    private $rich;
-    private $habitat;
-    public $price = false; 
-    public function __construct($title, $price, $habitat)
+    protected $title;
+    protected $price;
+    protected $habitat;
+    public function __construct($title, $price)
     {
-        parent::__construct($title, $price);
-        $this->habitat=$habitat;
+        $this->title=$title;
+        $this->price=$price;
     }
     public function getHabitat()
     {
-    return $this->habitat;
+        $this->habitat = $habitat;
+        return $this->habitat;
     }
 }
-$duckEn = new Duck('Scrooge McDuck ', 1000000, 'Disney');
-$duckRu = new Duck('Drake', 100, 'Altai' );
+$duckEn = new Duck('Scrooge McDuck ', 1000000);
+$duckRu = new Duck('Drake', 100);
+$duckEn -> getHabitat('Disney');
+$duckRu -> getHabitat('Altai');
 
-class Goods extends ParentForType implements getGoods
+class Goods extends Product implements getGoods
 {
     public $name;
     public $category;
@@ -140,15 +133,8 @@ class Goods extends ParentForType implements getGoods
         echo $this->name . ' ' . $this->category . ' ' . $this->price;
     }
 }
-$goodsCrisp = new Goods();
-$goodsCrisp->name = 'Lays';
-$goodsCrisp->category = 'FoodFastFood';
-$goodsCrisp->price = 69;
-$goodsPhone = new Goods();
-$goodsPhone->name = 'Sony X';
-$goodsPhone->category = 'FlagshipFon';
-$goodsPhone->price = 40000;
-
+$goodsCrisp = new Goods('Lays','FoodFastFood', 69);
+$goodsPhone = new Goods('Sony X', 'FlagshipFon', 40000);
 ?>
 <!doctype html>
 <html lang="ru">
@@ -158,6 +144,7 @@ $goodsPhone->price = 40000;
     <title>Document</title>
 </head>
 <body>
-<!--пока не вывожу, потому что выдает ошибку на сервере строка 94 ...не знаю как исправить -->
+<?php $BMVi8->getPrint(); ?>
+
 </body>
 </html>
