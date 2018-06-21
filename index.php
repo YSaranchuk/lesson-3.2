@@ -105,13 +105,14 @@ class Duck extends Product implements InfoDuck
 {
     protected $title;
     protected $price;
-    protected $habitat;
+    private $habitat;
     public function __construct($title, $price)
     {
         $this->title=$title;
         $this->price=$price;
+    
     }
-    public function getHabitat()
+    public function getHabitat($habitat)
     {
         $this->habitat = $habitat;
         return $this->habitat;
@@ -142,6 +143,5 @@ $goodsPhone = new Goods('Sony X', 'FlagshipFon', 40000);
 </head>
 <body>
 <?php $BMVi8->getPrint(); ?>
-
 </body>
 </html>
