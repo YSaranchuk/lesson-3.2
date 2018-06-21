@@ -16,6 +16,8 @@ interface DiskontInterface
 }
 abstract class Product extends ParentForType implements DiskontInterface
 {
+    private $result;
+    protected $diskont;
     protected $title;
     protected $price;
     public function __construct($title, $price)
@@ -23,8 +25,7 @@ abstract class Product extends ParentForType implements DiskontInterface
         $this->title = $title;
         $this->price = $price;
     }
-    private $result;
-    protected $diskont;
+    
     public function setDiskont($diskont) 
     {  
         $result = $this->price - ($this->price * $diskont);
