@@ -23,12 +23,13 @@ abstract class Product extends ParentForType implements DiskontInterface
         $this->title = $title;
         $this->price = $price;
     }
+    privat $result;
     protected $diskont;
     public function setDiskont($diskont) 
     {  
         $result = $this->price - ($this->price * $diskont);
         $this->result = $result;
-        print_r($result); // подскажите что я делаю не так , почему формула не выводит цену с дисконтом...
+        print_r($result); 
     }
 }
  
@@ -49,7 +50,7 @@ interface InfoPen
 interface InfoDuck
 {
     public function __construct($title, $price);
-    public function getHabitat();
+    public function getHabitat($habitat);
 }
 interface getGoods
 {
