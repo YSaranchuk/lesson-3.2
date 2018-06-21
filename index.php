@@ -23,7 +23,7 @@ abstract class Product extends ParentForType implements DiskontInterface
         $this->title = $title;
         $this->price = $price;
     }
-    privat $result;
+    private $result;
     protected $diskont;
     public function setDiskont($diskont) 
     {  
